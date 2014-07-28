@@ -1,4 +1,4 @@
-require 'sinatra/base'
+require 'sinatra'
 require "data_mapper"
 
 env = ENV["RACK_ENV"] || "development"
@@ -15,8 +15,10 @@ DataMapper.finalize
 DataMapper.auto_upgrade!
 
 class Bookmarks < Sinatra::Base
+
   get '/' do
-    'Hello Bookmarks!'
+  	@links = Link.all
+ 	erb :index
   end
 
   # start the server if ruby file executed directly
