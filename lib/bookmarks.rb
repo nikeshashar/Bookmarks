@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require "data_mapper"
 
 env = ENV["RACK_ENV"] || "development"
 # we're telling the datamapper to use a postgres database on localhost. The name will be 
