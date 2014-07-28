@@ -7,6 +7,8 @@ env = ENV["RACK_ENV"] || "development"
 DataMapper.setup(:default, "postgres://localhost/bookmarks_#{env}")
 
 require './lib/link' #this needs to be done after DataMapper has been initialised
+require './lib/tag' #this needs to be done after DataMapper has been initialised
+
 
 #After declaring your models you need to finalise them
 DataMapper.finalize
@@ -23,7 +25,10 @@ class Bookmarks < Sinatra::Base
 post '/links' do
   url = params["url"]
   title = params["title"]
-  Link.create(:url => url, :title => title)
+  tags = params["tags"].split(" ").map do |tag|
+  	Tag.first_or_create(:text => tag)
+  end
+  Link.create(:url => url, :title => title, :tags => tags)
   redirect to('/')
 end
 
