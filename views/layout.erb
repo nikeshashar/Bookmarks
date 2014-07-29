@@ -1,6 +1,16 @@
 <body>
+	<h1> bookmark manager </h1>
 	<% if current_user %>
-		Welcome, <%= current_user.email %>
-		<% end %>
+		Welcome, <%= current_user.email %>	
+	<% end %>
+
+	<% if flash[:error] %>
+  		<div id="notice"><%= flash[:error] %></div>
+	<% end %>
+
 	<%= yield %>
+
+	<% if @notice %>
+  		<div id="notice"><%=@notice %></div>
+	<% end %>
 </body>
