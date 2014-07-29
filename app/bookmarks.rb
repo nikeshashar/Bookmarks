@@ -2,22 +2,10 @@ require "sinatra/base"
 require "data_mapper"
 require "bcrypt"
 require 'rack-flash'
-
-
-env = ENV["RACK_ENV"] || "development"
-# we're telling the datamapper to use a postgres database on localhost. The name will be 
-# either bookmarks_test or bookmarks_development, depending on the environment
-DataMapper.setup(:default, "postgres://localhost/bookmarks_#{env}")
-
 require './lib/link' #this needs to be done after DataMapper has been initialised
 require './lib/tag' #this needs to be done after DataMapper has been initialised
 require './lib/user' #this needs to be done after DataMapper has been initialised
-
-#After declaring your models you need to finalise them
-DataMapper.finalize
-
-#However the database tables don't exist yet. Let's tell Datamapper to create them
-DataMapper.auto_upgrade!
+require_relative 'data_mapper_setup'
 
 class Bookmarks < Sinatra::Base
 
@@ -59,8 +47,9 @@ post '/users' do
       session[:user_id] = @user.id
       redirect to('/')
   else
-    flash[:error] = "Sorry, your passwords don't match"
+     flash.now[:errors] = @user.errors.full_messages
     erb :"users/new"
+  
   end
 end
 
