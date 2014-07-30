@@ -2,21 +2,21 @@ require "sinatra/base"
 require "data_mapper"
 require "bcrypt"
 require 'rack-flash'
-require './lib/link' #this needs to be done after DataMapper has been initialised
-require './lib/tag' #this needs to be done after DataMapper has been initialised
-require './lib/user' #this needs to be done after DataMapper has been initialised
+require './lib/link' 
+require './lib/tag' 
+require './lib/user' 
 require_relative 'data_mapper_setup'
 
 class Bookmarks < Sinatra::Base
 
 enable :sessions
 set :session_secret, 'super secret'
-  use Rack::Flash
+use Rack::Flash
 
-  get '/' do
-  	@links = Link.all
- 	erb :index
-  end
+get '/' do
+	@links = Link.all
+	erb :index
+end
 
 post '/links' do
   url = params["url"]
@@ -44,12 +44,28 @@ post '/users' do
           :password_confirmation => params[:password_confirmation])
 
   if @user.save 
-      session[:user_id] = @user.id
-      redirect to('/')
+    session[:user_id] = @user.id
+    redirect to('/')
   else
-     flash.now[:errors] = @user.errors.full_messages
+    flash.now[:errors] = @user.errors.full_messages
     erb :"users/new"
   
+  end
+end
+
+get '/sessions/new' do 
+  erb :"sessions/new"
+end
+
+post '/sessions' do 
+  email, password = params[:email], params[:password]
+  user = User.authenticate(email, password)
+  if user
+    session[:user_id] = user.id 
+    redirect to('/')
+  else
+    flash.now[:errors] = ["The email or password is incorrect"]
+    erb :"sessions/new"
   end
 end
 

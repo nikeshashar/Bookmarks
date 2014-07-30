@@ -17,7 +17,16 @@ attr_accessor :password_confirmation
 		self.password_digest = BCrypt::Password.create(password)
 	end
 
-validates_confirmation_of :password
+	def self.authenticate(email, password)
+		user = first(:email => email)
+		if user && BCrypt::Password.new(user.password_digest) == password
+			user
+		else
+			nil
+		end
+	end
+
+validates_confirmation_of :password, :message => "Sorry, your passwords don't match"
 validates_uniqueness_of :email
 
 end
