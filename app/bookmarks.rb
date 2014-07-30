@@ -7,11 +7,13 @@ require './lib/tag'
 require './lib/user' 
 require_relative 'data_mapper_setup'
 
+
 class Bookmarks < Sinatra::Base
 
 enable :sessions
 set :session_secret, 'super secret'
 use Rack::Flash
+use Rack::MethodOverride
 
 get '/' do
 	@links = Link.all
@@ -67,6 +69,12 @@ post '/sessions' do
     flash.now[:errors] = ["The email or password is incorrect"]
     erb :"sessions/new"
   end
+end
+
+delete '/sessions' do 
+  session[:user_id] = nil
+  flash[:notice] = "Good bye!"
+  redirect to('/')
 end
 
 helpers do 
