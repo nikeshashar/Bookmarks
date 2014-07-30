@@ -2,6 +2,7 @@ require "sinatra/base"
 require "data_mapper"
 require "bcrypt"
 require 'rack-flash'
+require 'sinatra/partial'
 require './lib/link' 
 require './lib/tag' 
 require './lib/user' 
