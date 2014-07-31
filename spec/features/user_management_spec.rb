@@ -74,12 +74,12 @@ feature "User forgets password" do
 		expect(page).to have_content("Forgot password?")
 	end
 
-	# scenario "user enters email that is not registered" do 
-	# 	visit '/users/forgot'
-	# 	fill_in 'email', with: "wrongtest@test.com"
-	# 	click_on 'Reset Password'
-	# 	expect(page).to have_content("Sorry, 'wrongtest@test.com' is not registered. Please sign up first!")
-	# end
+	scenario "user enters email that is not registered" do 
+		visit '/users/forgot'
+		fill_in 'email', with: "wrongtest@test.com"
+		click_on 'Reset Password'
+		expect(page).to have_content("Sorry, wrongtest@test.com is not registered. Please sign up first!")
+	end
 
 	# scenario "user enters right email to reset password" do 
 	# 	visit '/users/forgot'

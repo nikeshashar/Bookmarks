@@ -19,5 +19,7 @@ require_relative 'controllers/forgot'
 enable :sessions
 set :session_secret, 'super secret'
 set :partial_template_engine, :erb
+set :static, true
+set :public_folder, Proc.new { File.join(__FILE__, '..', "public") }
 use Rack::Flash
 use Rack::MethodOverride
