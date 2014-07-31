@@ -14,6 +14,7 @@ require_relative 'controllers/tags'
 require_relative 'controllers/application'
 require_relative 'data_mapper_setup'
 require_relative 'helpers/application'
+require_relative 'controllers/forgot'
 
 enable :sessions
 set :session_secret, 'super secret'
