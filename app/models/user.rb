@@ -11,6 +11,8 @@ attr_accessor :password_confirmation
 	property :id, Serial
 	property :email, String, :unique => true, :message => "This email is already taken"
 	property :password_digest, Text
+	property :password_token, String
+	property :password_token_timestamp, Text
 
 	def password=(password)
 		@password = password
