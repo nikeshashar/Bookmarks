@@ -12,7 +12,6 @@ post '/users/forgot' do
 					password_token_timestamp: create_new_timestamp)
 		send_email(user, token)
 		"Password reset link sent to your email address"
-		redirect to '/'
 	else
 		flash[:errors] = ["Sorry, #{email} is not registered. Please sign up first!"]
 		redirect to '/users/forgot'

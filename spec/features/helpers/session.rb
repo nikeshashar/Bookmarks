@@ -8,8 +8,8 @@ module SessionHelpers
 	end
 
 	def sign_up(email = "alice@example.com", 
-				password = "oranges!",
-				password_confirmation = "oranges!")
+			password = "oranges!",
+			password_confirmation = "oranges!")
 		visit '/users/new'
 		expect(page.status_code).to eq(200)
 		fill_in :email, :with => email

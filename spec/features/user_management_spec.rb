@@ -64,7 +64,7 @@ end
 feature "User forgets password" do 
 
 	before(:each) do 
-		User.create(:email => "nikeshashar@gmail.com",
+		User.create(:email => "test@test.com",
 					:password => 'test',
 					:password_confirmation => 'test')
 	end
@@ -83,7 +83,7 @@ feature "User forgets password" do
 
 	scenario "user enters right email address" do 
 		visit '/users/forgot'
-		fill_in 'email', with: "nikeshashar@gmail.com"
+		fill_in 'email', with: "test@test.com"
 		click_on 'Reset Password'
 		expect(page).to have_content("Password reset link sent to your email address")	
 	end
@@ -91,7 +91,7 @@ end
 
 feature "User resets password" do 
 	before(:each) do 
-	User.create(:email => "nikeshashar@gmail.com",
+	User.create(:email => "test@test.com",
 				:password => 'test',
 				:password_confirmation => 'test',
 				:password_token => "1token")	
